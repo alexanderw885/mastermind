@@ -6,8 +6,7 @@ class Board
 
   def initialize
     @code = Array.new(4)
-    @guesses = Array.new(10)
-    @guesses.map! { Array.new(4) }
+    @guesses = []
   end
 
   def compare(guess, code = @code)
@@ -35,7 +34,7 @@ class Board
   def count_part_match(guess, code)
     out = 0
     guess.each do |c|
-      match = guess.index(c)
+      match = code.index(c)
       if match
         out += 1
         code.delete_at(match)
@@ -44,5 +43,37 @@ class Board
     out
   end
 
-  # Get right color, wrong positions
+  def add_guess(guess)
+    @guesses.append(guess)
+  end
+
+  def print_guesses
+    out = "Guesses    Results\n"
+    @guesses.each do |guess|
+      out += guess_to_string(guess[:guess])
+      out += '    '
+      out += results_to_string(guess[:results])
+      out += "\n"
+    end
+    print out
+  end
+
+  def guess_to_string(guess)
+    out = ''
+    guess.each do |col|
+      out += '■ '.colorize(col.to_sym)
+    end
+    out
+  end
+
+  def results_to_string(results)
+    out = ''
+    results[:exact].times do
+      out += '■ '.colorize(:red)
+    end
+    results[:part].times do
+      out += '■ '.colorize(:white)
+    end
+    out
+  end
 end

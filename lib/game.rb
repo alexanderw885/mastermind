@@ -5,6 +5,7 @@ class Game
   def initialize
     @breaker = Breaker.new
     @board = Board.new
+    make_color_aliases(Game.colors)
   end
 
   def create_code
@@ -36,12 +37,18 @@ class Game
   end
 
   def make_guess(guess)
-    @board.compare(guess)
+    results = @board.compare(guess)
+    guess_with_results = {
+      guess: guess,
+      results: results
+    }
+    @board.add_guess(guess_with_results)
+    @board.print_guesses
   end
 
   def print_intro
     message = "Welcome to Mastermind!\nWe have #{Game.colors.length} colors:\n"
-    Game.colors.each { |c| message += "■ #{c}\n".colorize(c) }
+    Game.colors.each { |col| message += "■ #{col}\n".colorize(col) }
     message += "\nThere are also two types of info keys:\n"
     message += "#{'■ white'.colorize(:white)}: 1 guess is the right color, wrong position\n"
     message += "#{'■ red'.colorize(:red)}: 1 guess is the right color, right position\n\n"
@@ -51,5 +58,11 @@ class Game
 
   def self.colors
     %i[red blue green yellow magenta white]
+  end
+end
+
+def make_color_aliases(colors)
+  colors.each do |c|
+    String.add_color_alias(c[0].to_sym, c)
   end
 end

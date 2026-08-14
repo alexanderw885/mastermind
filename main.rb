@@ -10,5 +10,7 @@ game = Game.new
 game.print_intro
 game.create_code
 
-guess = game.read_user_code
-p game.make_guess(guess)
+2.times do
+  guess = game.read_user_code
+  game.make_guess(guess)
+end
