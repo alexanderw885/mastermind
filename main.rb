@@ -10,7 +10,9 @@ game = Game.new
 game.print_intro
 game.create_code
 
-2.times do
+until game.over?
   guess = game.read_user_code
   game.make_guess(guess)
 end
+
+print "The game is over!\n"

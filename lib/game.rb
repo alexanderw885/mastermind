@@ -2,15 +2,19 @@
 
 # Game stores the game objects and handles logic
 class Game
+  attr_accessor :num_turns, :curr_turn
+
   def initialize
     @breaker = Breaker.new
     @board = Board.new
     make_color_aliases(Game.colors)
+    @num_turns = 10
+    @curr_turn = 0
   end
 
   def create_code
     4.times { |i| @board.code[i] = Game.colors[Random.rand(6)] }
-    p @board.code
+    # p @board.code
   end
 
   def validate_code(code)
@@ -29,7 +33,7 @@ class Game
   def read_user_code
     valid_guess = false
     until valid_guess
-      print "Enter your code:\n"
+      print " Guess #{curr_turn + 1} of #{num_turns}\nEnter your code:\n"
       input = gets.downcase.chomp.split(' ')
       valid_guess = validate_code(input)
     end
@@ -44,6 +48,16 @@ class Game
     }
     @board.add_guess(guess_with_results)
     @board.print_guesses
+    self.curr_turn += 1
+  end
+
+  def over?
+    return true if curr_turn >= num_turns
+
+    last_guess = @board.guesses.dig(-1, :results, :exact)
+    return false if last_guess.nil?
+
+    last_guess == 4
   end
 
   def print_intro
@@ -52,7 +66,7 @@ class Game
     message += "\nThere are also two types of info keys:\n"
     message += "#{'■ white'.colorize(:white)}: 1 guess is the right color, wrong position\n"
     message += "#{'■ red'.colorize(:red)}: 1 guess is the right color, right position\n\n"
-    message += "Guess by inputting the first letter of each color (e.g. \"R R B M W G\")\n"
+    message += "Guess by inputting the first letter of each color (e.g. \"R R B M\")\n"
     print message
   end
 

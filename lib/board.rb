@@ -2,7 +2,7 @@
 
 # Board class stores guesses and the code
 class Board
-  attr_accessor :code
+  attr_accessor :code, :guesses
 
   def initialize
     @code = Array.new(4)
