@@ -52,12 +52,14 @@ class Game
   end
 
   def over?
-    return true if curr_turn >= num_turns
+    return :maker if curr_turn >= num_turns
 
     last_guess = @board.guesses.dig(-1, :results, :exact)
     return false if last_guess.nil?
 
-    last_guess == 4
+    return :breaker if last_guess == 4
+
+    false
   end
 
   def print_intro

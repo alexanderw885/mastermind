@@ -10,9 +10,11 @@ game = Game.new
 game.print_intro
 game.create_code
 
-until game.over?
+winner = false
+until winner
   guess = game.read_user_code
   game.make_guess(guess)
+  winner = game.over?
 end
 
-print "The game is over!\n"
+print "The winner is the code #{winner}!!!\n"
