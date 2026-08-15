@@ -2,7 +2,6 @@
 
 require 'colorize'
 
-require_relative 'lib/breaker'
 require_relative 'lib/board'
 require_relative 'lib/game'
 

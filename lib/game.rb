@@ -5,7 +5,6 @@ class Game
   attr_accessor :num_turns, :curr_turn
 
   def initialize
-    @breaker = Breaker.new
     @board = Board.new
     make_color_aliases(Game.colors)
     @num_turns = 10
