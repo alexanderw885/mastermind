@@ -11,35 +11,16 @@ class Game
     @curr_turn = 0
   end
 
-  def create_code
-    4.times { |i| @board.code[i] = Game.colors[Random.rand(6)] }
-    # p @board.code
+  def enter_code(code)
+    @board.code = code
   end
 
-  def validate_code(code)
-    valid_colors = Game.colors.map { |c| c[0] }
-    unless code.length == 4
-      print "Invalid code length: Should be 4 colors\n"
-      return false
-    end
-    unless (code - valid_colors).empty?
-      print "Invalid colors: #{(code - valid_colors).uniq}\n"
-      return false
-    end
-    true
-  end
+  # def create_code
+  #   4.times { |i| @board.code[i] = Game.colors[Random.rand(6)] }
+  #   p @board.code
+  # end
 
-  def read_user_code
-    valid_guess = false
-    until valid_guess
-      print " Guess #{curr_turn + 1} of #{num_turns}\nEnter your code:\n"
-      input = gets.downcase.chomp.split(' ')
-      valid_guess = validate_code(input)
-    end
-    input
-  end
-
-  def make_guess(guess)
+  def guess(guess)
     results = @board.compare(guess)
     guess_with_results = {
       guess: guess,
