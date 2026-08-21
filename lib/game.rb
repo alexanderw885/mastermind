@@ -15,11 +15,6 @@ class Game
     @board.code = code
   end
 
-  # def create_code
-  #   4.times { |i| @board.code[i] = Game.colors[Random.rand(6)] }
-  #   p @board.code
-  # end
-
   def guess(guess)
     results = @board.compare(guess)
     guess_with_results = {
@@ -29,6 +24,7 @@ class Game
     @board.add_guess(guess_with_results)
     @board.print_guesses
     self.curr_turn += 1
+    guess_with_results
   end
 
   def over?

@@ -16,7 +16,7 @@ maker = nil
 breaker = nil
 loop do
   input = gets.chomp.downcase
-  case input
+  case input[0]
   when 'm'
     maker = Human.new
     breaker = Cpu.new
@@ -36,7 +36,8 @@ game.enter_code(code)
 winner = false
 until winner
   guess = breaker.make_guess
-  game.guess(guess)
+  result = game.guess(guess)
+  breaker.take_feedback(result)
   winner = game.over?
 end
 

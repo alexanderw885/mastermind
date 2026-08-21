@@ -12,7 +12,8 @@ class Board
   def compare(guess, code = @code)
     # In order to preserve the original array, create local copies
     local_code = code.map { |c| c[0] }
-    local_guess = guess.map { |c| c }
+    local_guess = guess.map { |c| c[0] }
+
     output = Hash.new(0)
     output[:exact] = count_exact_match(local_guess, local_code)
     output[:part] = count_part_match(local_guess, local_code)

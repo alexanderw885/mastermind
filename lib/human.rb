@@ -25,6 +25,8 @@ class Human
     input
   end
 
+  def take_feedback(guess) end
+
   alias make_guess read_user_code
   alias make_code read_user_code
 end
